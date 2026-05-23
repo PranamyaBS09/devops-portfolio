@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         IMAGE_NAME    = 'portfolio'
-        GITHUB_USER   = 'yashaswinihr15'
-        GITHUB_REPO   = 'portfolio'
+        GITHUB_USER   = 'PranamyaBS09'
+        GITHUB_REPO   = 'devops-portfolio'
         GITHUB_BRANCH = 'main'
     }
 
