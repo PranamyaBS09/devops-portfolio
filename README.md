@@ -174,7 +174,7 @@ docker compose version
 Open PowerShell in the `portfolio` folder:
 
 ```powershell
-cd f:\devops\portfolio
+cd C:\devops\portfolio
 
 git init
 git add .
