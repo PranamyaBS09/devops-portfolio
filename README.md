@@ -204,7 +204,7 @@ GITHUB_REPO = 'portfolio'              // ← your repo name (if different)
 ### Step 4 — Start Jenkins with Docker Compose
 
 ```powershell
-cd f:\devops\portfolio
+cd C:\devops\portfolio
 
 docker compose up -d
 ```
@@ -287,7 +287,7 @@ $JENKINS_TOKEN = "YOUR_API_TOKEN"  # paste the token from Step 8
 ### Step 10 — Start the Watcher
 
 ```powershell
-cd f:\devops\portfolio
+cd C:\devops\portfolio
 .\watch.ps1
 ```
 
@@ -327,7 +327,7 @@ Every time you start working:
 docker compose up -d
 
 # 2. Start the file watcher (in a separate PowerShell window)
-cd f:\devops\portfolio
+cd C:\devops\portfolio
 .\watch.ps1
 ```
 

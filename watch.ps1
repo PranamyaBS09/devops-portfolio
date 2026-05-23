@@ -1,7 +1,7 @@
 Get-EventSubscriber -ErrorAction SilentlyContinue | Unregister-Event
 Get-Job -ErrorAction SilentlyContinue | Remove-Job -Force
 
-$WatchPath = "F:\devops\portfolio"
+$WatchPath = "C:\devops\portfolio"
 $Filter = "*.html"
 
 Write-Host "================================="
@@ -11,8 +11,8 @@ Write-Host "Watching: $WatchPath"
 Write-Host "Waiting for HTML file changes..."
 Write-Host ""
 
-$user = "yashaswinihr15"
-$apiToken = "112cf766ed739e771d8087cbf087774f57"
+$user = "Pranamya"
+$apiToken = "11318b3c1c05b65b9e5a34c4387ac92268"
 
 $lastRun = Get-Date "2000-01-01"
 
