@@ -23,13 +23,11 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                echo '☸️ Deploying to Kubernetes...'
+                echo '☸️ Deploying to Kubernetes (Minikube)...'
                 sh '''
-                    export KUBECONFIG=$HOME/.kube/config
+                    kubectl --context=minikube apply -f k8s/
 
-                    kubectl apply -f k8s/
-
-                    kubectl set image deployment/portfolio-deployment \
+                    kubectl --context=minikube set image deployment/portfolio-deployment \
                     portfolio=portfolio:${BUILD_NUMBER}
                 '''
             }
@@ -66,67 +64,11 @@ pipeline {
     post {
 
         success {
-            echo '🎉 Kubernetes deployment successful!'
-
-            catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
-
-                withCredentials([string(
-                    credentialsId: 'discord-webhook',
-                    variable: 'DISCORD_WEBHOOK'
-                )]) {
-
-                    sh '''
-                        COMMIT_MSG=$(git log -1 --pretty=%B | tr -d '\\n' | tr -d '"')
-
-                        curl -H "Content-Type: application/json" \
-                        -X POST \
-                        -d "{
-                            \\"embeds\\":[{
-                                \\"title\\":\\"🟢 Kubernetes Deployment Success\\",
-                                \\"description\\":\\"Portfolio deployed using Jenkins + Docker + Kubernetes 🚀\\",
-                                \\"color\\":3066993,
-                                \\"fields\\":[
-                                    {
-                                        \\"name\\":\\"Latest Commit\\",
-                                        \\"value\\":\\"${COMMIT_MSG}\\"
-                                    },
-                                    {
-                                        \\"name\\":\\"Status\\",
-                                        \\"value\\":\\"Running on Minikube ☸️\\"
-                                    }
-                                ]
-                            }]
-                        }" \
-                        $DISCORD_WEBHOOK
-                    '''
-                }
-            }
+            echo '🎉 Deployment successful!'
         }
 
         failure {
             echo '❌ Deployment failed'
-
-            catchError(buildResult: 'FAILURE', stageResult: 'SUCCESS') {
-
-                withCredentials([string(
-                    credentialsId: 'discord-webhook',
-                    variable: 'DISCORD_WEBHOOK'
-                )]) {
-
-                    sh '''
-                        curl -H "Content-Type: application/json" \
-                        -X POST \
-                        -d "{
-                            \\"embeds\\":[{
-                                \\"title\\":\\"🔴 Build Failed\\",
-                                \\"description\\":\\"Jenkins pipeline failed. Check logs.\\",
-                                \\"color\\":15158332
-                            }]
-                        }" \
-                        $DISCORD_WEBHOOK
-                    '''
-                }
-            }
         }
     }
 }
