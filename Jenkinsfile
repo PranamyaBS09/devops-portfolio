@@ -17,21 +17,23 @@ pipeline {
                     docker build --no-cache \
                     -t portfolio:${BUILD_NUMBER} \
                     -t portfolio:latest .
+                    minikube image load portfolio:latest
                 '''
             }
         }
+stage('Deploy to Kubernetes') {
+    steps {
+        echo '☸️ Deploying to Kubernetes (Minikube)...'
+        sh '''
+            export KUBECONFIG=/root/.kube/config
 
-        stage('Deploy to Kubernetes') {
-            steps {
-                echo '☸️ Deploying to Kubernetes (Minikube)...'
-                sh '''
-                    kubectl --context=minikube apply -f k8s/
+            kubectl apply -f k8s/
 
-                    kubectl --context=minikube set image deployment/portfolio-deployment \
-                    portfolio=portfolio:${BUILD_NUMBER}
-                '''
-            }
-        }
+            kubectl set image deployment/portfolio-deployment \
+            portfolio=portfolio:${BUILD_NUMBER}
+        '''
+    }
+}
 
         stage('Push to GitHub') {
             steps {
