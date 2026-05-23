@@ -17,7 +17,7 @@ pipeline {
                     docker build --no-cache \
                     -t portfolio:${BUILD_NUMBER} \
                     -t portfolio:latest .
-                    minikube image load portfolio:latest
+                   
                 '''
             }
         }
