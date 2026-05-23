@@ -1,1 +1,1 @@
-def user = hudson.model.User.get('yashaswinihr20'); def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword('admin'); user.addProperty(password); user.save(); println 'Password reset successful'
+def user = hudson.model.User.get('Pranamya'); def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword('admin'); user.addProperty(password); user.save(); println 'Password reset successful'
